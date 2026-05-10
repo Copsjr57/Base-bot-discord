@@ -1,0 +1,18 @@
+# Environnement virtuel
+venv/
+.venv/
+
+# Fichiers de configuration sensibles
+.env
+
+# Fichiers Python compilés
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
