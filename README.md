@@ -32,12 +32,36 @@
 Exécutez : `python main.py`
 
 ## Commandes disponibles
+Utilisez `!help` pour voir toutes les commandes automatiquement mises à jour.
+
+### Commandes générales
 - `!ping` : Répond "Pong!"
 - `!hello` : Dit bonjour à l'utilisateur
 - `!info` : Donne des infos sur le serveur
 
+### Commandes de modération (nécessitent des permissions)
+- `!kick @membre [raison]` : Expulse un membre
+- `!ban @membre [raison]` : Banni un membre
+- `!unban nom#tag` : Débanni un membre
+- `!mute @membre [raison]` : Rend un membre muet (nécessite un rôle "Muted")
+- `!unmute @membre [raison]` : Rend un membre non-muet
+
+### Aide
+- `!help` : Affiche l'aide générale
+- `!help <commande>` : Aide pour une commande spécifique
+- `!help <catégorie>` : Aide pour une catégorie de commandes
+
+## Structure du projet
+- `main.py` : Fichier principal du bot
+- `general.py` : Cog pour les commandes générales
+- `moderation.py` : Cog pour les commandes de modération
+- `help_cog.py` : Cog pour l'aide personnalisée et automatique
+- `requirements.txt` : Dépendances Python
+- `.env.example` : Exemple de fichier de configuration
+- `README.md` : Ce fichier
+
 ## Personnalisation
-Modifiez `main.py` pour ajouter vos propres commandes. Consultez la documentation de discord.py pour plus d'idées.
+Modifiez les fichiers `.py` pour ajouter vos propres commandes. Chaque cog est indépendant, ce qui facilite l'ajout de nouvelles fonctionnalités. Consultez la documentation de discord.py pour plus d'idées.
 
 ## Sécurité
 - Ne partagez jamais votre token Discord
