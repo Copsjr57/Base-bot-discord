@@ -3,21 +3,21 @@ from discord.ext import commands
 
 class CustomHelp(commands.HelpCommand):
     """
-    Commande d'aide personnalisée qui se met à jour automatiquement.
+    Custom help command that automatically updates.
     """
 
     async def send_bot_help(self, mapping):
         """
-        Envoie l'aide générale du bot.
+        Send general bot help.
         """
         embed = discord.Embed(
-            title="Aide du Bot",
-            description="Voici la liste des commandes disponibles. Utilisez `!help <commande>` pour plus de détails.",
+            title="Bot Help",
+            description="Here is a list of available commands. Use `!help <command>` for more details.",
             color=discord.Color.blue()
         )
         for cog, commands_list in mapping.items():
-            if cog and commands_list:  # Ignore les commandes sans cog
-                cog_name = cog.qualified_name if cog else "Autres"
+            if cog and commands_list:  # Ignore commands without cog
+                cog_name = cog.qualified_name if cog else "Other"
                 command_names = [cmd.name for cmd in commands_list if not cmd.hidden]
                 if command_names:
                     embed.add_field(
@@ -29,11 +29,11 @@ class CustomHelp(commands.HelpCommand):
 
     async def send_cog_help(self, cog):
         """
-        Envoie l'aide pour un cog spécifique.
+        Send help for a specific cog.
         """
         embed = discord.Embed(
-            title=f"Aide - {cog.qualified_name}",
-            description=cog.description or "Pas de description.",
+            title=f"Help - {cog.qualified_name}",
+            description=cog.description or "No description.",
             color=discord.Color.blue()
         )
         commands_list = [cmd for cmd in cog.get_commands() if not cmd.hidden]
@@ -41,41 +41,41 @@ class CustomHelp(commands.HelpCommand):
             for cmd in commands_list:
                 embed.add_field(
                     name=f"!{cmd.name}",
-                    value=cmd.help or "Pas de description.",
+                    value=cmd.help or "No description.",
                     inline=False
                 )
         else:
-            embed.add_field(name="Aucune commande", value="Ce cog n'a pas de commandes visibles.")
+            embed.add_field(name="No commands", value="This cog has no visible commands.")
         await self.get_destination().send(embed=embed)
 
     async def send_command_help(self, command):
         """
-        Envoie l'aide pour une commande spécifique.
+        Send help for a specific command.
         """
         embed = discord.Embed(
-            title=f"Aide - !{command.name}",
-            description=command.help or "Pas de description.",
+            title=f"Help - !{command.name}",
+            description=command.help or "No description.",
             color=discord.Color.blue()
         )
-        embed.add_field(name="Utilisation", value=f"!{command.name} {command.signature}", inline=False)
+        embed.add_field(name="Usage", value=f"!{command.name} {command.signature}", inline=False)
         if command.aliases:
-            embed.add_field(name="Alias", value="`" + "`, `".join(command.aliases) + "`", inline=False)
+            embed.add_field(name="Aliases", value="`" + "`, `".join(command.aliases) + "`", inline=False)
         await self.get_destination().send(embed=embed)
 
     async def send_group_help(self, group):
         """
-        Envoie l'aide pour un groupe de commandes.
+        Send help for a group of commands.
         """
         embed = discord.Embed(
-            title=f"Aide - !{group.name}",
-            description=group.help or "Pas de description.",
+            title=f"Help - !{group.name}",
+            description=group.help or "No description.",
             color=discord.Color.blue()
         )
-        embed.add_field(name="Utilisation", value=f"!{group.name} {group.signature}", inline=False)
+        embed.add_field(name="Usage", value=f"!{group.name} {group.signature}", inline=False)
         subcommands = [cmd for cmd in group.commands if not cmd.hidden]
         if subcommands:
             embed.add_field(
-                name="Sous-commandes",
+                name="Subcommands",
                 value="`" + "`, `".join([cmd.name for cmd in subcommands]) + "`",
                 inline=False
             )
@@ -83,10 +83,10 @@ class CustomHelp(commands.HelpCommand):
 
     async def send_error_message(self, error):
         """
-        Envoie un message d'erreur pour l'aide.
+        Send an error message for help.
         """
         embed = discord.Embed(
-            title="Erreur",
+            title="Error",
             description=error,
             color=discord.Color.red()
         )
@@ -94,12 +94,12 @@ class CustomHelp(commands.HelpCommand):
 
 class HelpCog(commands.Cog):
     """
-    Cog pour la commande d'aide personnalisée.
+    Cog for the custom help command.
     """
 
     def __init__(self, bot):
         self.bot = bot
-        # Remplacer la commande help par défaut
+        # Replace default help command
         bot.help_command = CustomHelp()
 
 async def setup(bot):

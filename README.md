@@ -1,73 +1,89 @@
 # bot_discord_tuto
-# Tutoriel pour créer un bot Discord en Python
 
-## Prérequis
-- Python 3.8 ou plus récent
-- Un compte Discord
-- Un serveur Discord pour tester le bot
+[Version Francaise](README_FR.md) | [English Version](README_EN.md)
 
-## Étape 1 : Créer une application Discord
-1. Allez sur le [Portail des Développeurs Discord](https://discord.com/developers/applications)
-2. Cliquez sur "New Application" et donnez un nom à votre bot
-3. Dans l'onglet "Bot", cliquez sur "Add Bot"
-4. Copiez le "Token" du bot (gardez-le secret !)
+## Overview / Apercu
 
-## Étape 2 : Inviter le bot sur votre serveur
-1. Dans l'onglet "OAuth2" > "URL Generator"
-2. Sélectionnez "bot" dans les scopes
-3. Sélectionnez les permissions nécessaires (par exemple : Send Messages, Read Messages)
-4. Copiez l'URL générée et ouvrez-la dans votre navigateur pour inviter le bot
+This is a complete Discord bot starter template in Python with modular commands and security best practices. Perfect for learning how to build a Discord bot!
 
-## Étape 3 : Configuration du projet
-1. Clonez ce repo ou téléchargez les fichiers
-2. Créez un environnement virtuel : `python -m venv venv`
-3. Activez l'environnement : `venv\Scripts\activate` (Windows) ou `source venv/bin/activate` (Linux/Mac)
-4. Installez les dépendances : `pip install -r requirements.txt`
+Ceci est un template complet de bot Discord en Python avec des commandes modulaires et les meilleures pratiques de securite. Parfait pour apprendre a creer un bot Discord!
 
-## Étape 4 : Configuration du token
-1. Créez un fichier `.env` dans le même dossier que `main.py`
-2. Ajoutez votre token : `DISCORD_TOKEN=votre_token_ici`
+## Quick Start / Demarrage Rapide
 
-## Étape 5 : Lancer le bot
-Exécutez : `python main.py`
+### English
+1. Create a `.env` file with your Discord token
+2. Install dependencies: `pip install -r requirements.txt`
+3. Run the bot: `python main.py`
+4. Use `!help` to see all commands
+5. See [README_EN.md](README_EN.md) for detailed setup
 
-## Commandes disponibles
-Utilisez `!help` pour voir toutes les commandes automatiquement mises à jour.
+### Francais
+1. Creez un fichier `.env` avec votre token Discord
+2. Installez les dependances: `pip install -r requirements.txt`
+3. Lancez le bot: `python main.py`
+4. Utilisez `!help` pour voir toutes les commandes
+5. Consultez [README_FR.md](README_FR.md) pour l'installation detaillee
 
-### Commandes générales
-- `!ping` : Répond "Pong!"
-- `!hello` : Dit bonjour à l'utilisateur
-- `!info` : Donne des infos sur le serveur
+## Documentation / Tutoriels
 
-### Commandes de modération (nécessitent des permissions)
-- `!kick @membre [raison]` : Expulse un membre
-- `!ban @membre [raison]` : Banni un membre
-- `!unban nom#tag` : Débanni un membre
-- `!mute @membre [raison]` : Rend un membre muet (nécessite un rôle "Muted")
-- `!unmute @membre [raison]` : Rend un membre non-muet
+- [TUTORIAL_DISCORD_BOT_EN_DETAILED.pdf](TUTORIAL_DISCORD_BOT_EN_DETAILED.pdf) - Complete step-by-step tutorial explaining each command
+- [TUTORIEL_BOT_DISCORD_FR_DETAILLE.pdf](TUTORIEL_BOT_DISCORD_FR_DETAILLE.pdf) - Tutoriel complet etape par etape expliquant chaque commande
 
-### Aide
-- `!help` : Affiche l'aide générale
-- `!help <commande>` : Aide pour une commande spécifique
-- `!help <catégorie>` : Aide pour une catégorie de commandes
+## Features / Fonctionnalites
 
-## Structure du projet
-- `main.py` : Fichier principal du bot
-- `general.py` : Cog pour les commandes générales
-- `moderation.py` : Cog pour les commandes de modération
-- `help_cog.py` : Cog pour l'aide personnalisée et automatique
-- `requirements.txt` : Dépendances Python
-- `.env.example` : Exemple de fichier de configuration
-- `README.md` : Ce fichier
+- General commands (ping, hello, info)
+- Moderation commands (kick, ban, unban, mute, unmute)
+- Channel management (lock, unlock, lockall, unlockall)
+- Auto-updating help system
+- Modular cog-based architecture
+- Full security implementation
 
-## Personnalisation
-Modifiez les fichiers `.py` pour ajouter vos propres commandes. Chaque cog est indépendant, ce qui facilite l'ajout de nouvelles fonctionnalités. Consultez la documentation de discord.py pour plus d'idées.
+## Available Commands / Commandes Disponibles
 
-## Sécurité
-- Ne partagez jamais votre token Discord
-- Utilisez un fichier `.env` pour stocker les secrets
-- Ajoutez `.env` à votre `.gitignore`
+### General / Generales
+- `!ping` - Test bot responsiveness
+- `!hello` - Greet the user
+- `!info` - Server information
 
-## Ressources
-- [Documentation discord.py](https://discordpy.readthedocs.io/)
-- [Guide officiel Discord](https://discord.com/developers/docs/intro)
+### Moderation
+- `!kick @member [reason]` - Kick a member
+- `!ban @member [reason]` - Ban a member
+- `!unban name#tag` - Unban a member
+- `!mute @member [reason]` - Mute a member
+- `!unmute @member [reason]` - Unmute a member
+
+### Channel Management / Gestion de Salons
+- `!lock [#channel]` - Lock a channel
+- `!unlock [#channel]` - Unlock a channel
+- `!lockall` - Lock all channels
+- `!unlockall` - Unlock all channels
+
+## Project Structure / Structure du Projet
+
+```
+bot_discord_tuto/
+    main.py                    - Bot entry point
+    general.py                 - General commands cog
+    moderation.py              - Moderation commands cog
+    channels.py                - Channel management cog
+    help_cog.py                - Custom help command
+    requirements.txt           - Python dependencies
+    .env.example               - Configuration example
+    README.md                  - This file
+    README_EN.md               - English readme
+    README_FR.md               - French readme
+```
+
+## Security / Securite
+
+- Never share your Discord token
+- Always use `.env` file for secrets
+- Add `.env` to `.gitignore`
+- Test on private server before deployment
+
+## Resources / Ressources
+
+- [discord.py Documentation](https://discordpy.readthedocs.io/)
+- [Discord Developer Portal](https://discord.com/developers/)
+- [Python Documentation](https://docs.python.org/3/)
+

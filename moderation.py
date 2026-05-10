@@ -3,7 +3,7 @@ from discord.ext import commands
 
 class Moderation(commands.Cog):
     """
-    Cog pour les commandes de modération.
+    Cog for moderation commands.
     """
 
     def __init__(self, bot):
@@ -13,60 +13,60 @@ class Moderation(commands.Cog):
     @commands.has_permissions(kick_members=True)
     async def kick(self, ctx, member: discord.Member, *, reason=None):
         """
-        Expulse un membre du serveur.
-        Utilisation : !kick @membre [raison]
+        Kicks a member from the server.
+        Usage: !kick @member [reason]
         """
         if member == ctx.author:
-            await ctx.send("Tu ne peux pas te kicker toi-même !")
+            await ctx.send("You cannot kick yourself!")
             return
         if member.top_role >= ctx.author.top_role:
-            await ctx.send("Tu ne peux pas kicker quelqu'un avec un rôle supérieur ou égal au tien.")
+            await ctx.send("You cannot kick someone with a role equal to or higher than yours.")
             return
         try:
             await member.kick(reason=reason)
             embed = discord.Embed(
-                title="Membre expulsé",
-                description=f"{member.mention} a été expulsé.",
+                title="Member Kicked",
+                description=f"{member.mention} has been kicked.",
                 color=discord.Color.red()
             )
             if reason:
-                embed.add_field(name="Raison", value=reason)
+                embed.add_field(name="Reason", value=reason)
             await ctx.send(embed=embed)
         except discord.Forbidden:
-            await ctx.send("Je n'ai pas la permission d'expulser ce membre.")
+            await ctx.send("I don't have permission to kick this member.")
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
     async def ban(self, ctx, member: discord.Member, *, reason=None):
         """
-        Banni un membre du serveur.
-        Utilisation : !ban @membre [raison]
+        Bans a member from the server.
+        Usage: !ban @member [reason]
         """
         if member == ctx.author:
-            await ctx.send("Tu ne peux pas te bannir toi-même !")
+            await ctx.send("You cannot ban yourself!")
             return
         if member.top_role >= ctx.author.top_role:
-            await ctx.send("Tu ne peux pas bannir quelqu'un avec un rôle supérieur ou égal au tien.")
+            await ctx.send("You cannot ban someone with a role equal to or higher than yours.")
             return
         try:
             await member.ban(reason=reason)
             embed = discord.Embed(
-                title="Membre banni",
-                description=f"{member.mention} a été banni.",
+                title="Member Banned",
+                description=f"{member.mention} has been banned.",
                 color=discord.Color.red()
             )
             if reason:
-                embed.add_field(name="Raison", value=reason)
+                embed.add_field(name="Reason", value=reason)
             await ctx.send(embed=embed)
         except discord.Forbidden:
-            await ctx.send("Je n'ai pas la permission de bannir ce membre.")
+            await ctx.send("I don't have permission to ban this member.")
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
     async def unban(self, ctx, *, member_name):
         """
-        Débanni un membre du serveur.
-        Utilisation : !unban nom#tag
+        Unbans a member from the server.
+        Usage: !unban name#tag
         """
         banned_users = await ctx.guild.bans()
         member_name, member_discriminator = member_name.split('#')
@@ -76,67 +76,67 @@ class Moderation(commands.Cog):
             if (user.name, user.discriminator) == (member_name, member_discriminator):
                 await ctx.guild.unban(user)
                 embed = discord.Embed(
-                    title="Membre débanni",
-                    description=f"{user.mention} a été débanni.",
+                    title="Member Unbanned",
+                    description=f"{user.mention} has been unbanned.",
                     color=discord.Color.green()
                 )
                 await ctx.send(embed=embed)
                 return
-        await ctx.send("Membre non trouvé dans la liste des bannis.")
+        await ctx.send("Member not found in ban list.")
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
     async def mute(self, ctx, member: discord.Member, *, reason=None):
         """
-        Rend un membre muet (nécessite un rôle 'Muted').
-        Utilisation : !mute @membre [raison]
+        Mutes a member (requires a 'Muted' role).
+        Usage: !mute @member [reason]
         """
         muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
         if not muted_role:
-            await ctx.send("Le rôle 'Muted' n'existe pas. Crée-le d'abord.")
+            await ctx.send("The 'Muted' role does not exist. Create it first.")
             return
         if muted_role in member.roles:
-            await ctx.send("Ce membre est déjà muet.")
+            await ctx.send("This member is already muted.")
             return
         try:
             await member.add_roles(muted_role, reason=reason)
             embed = discord.Embed(
-                title="Membre muet",
-                description=f"{member.mention} a été rendu muet.",
+                title="Member Muted",
+                description=f"{member.mention} has been muted.",
                 color=discord.Color.orange()
             )
             if reason:
-                embed.add_field(name="Raison", value=reason)
+                embed.add_field(name="Reason", value=reason)
             await ctx.send(embed=embed)
         except discord.Forbidden:
-            await ctx.send("Je n'ai pas la permission de gérer les rôles.")
+            await ctx.send("I don't have permission to manage roles.")
 
     @commands.command()
     @commands.has_permissions(manage_roles=True)
     async def unmute(self, ctx, member: discord.Member, *, reason=None):
         """
-        Rend un membre non-muet.
-        Utilisation : !unmute @membre [raison]
+        Unmutes a member.
+        Usage: !unmute @member [reason]
         """
         muted_role = discord.utils.get(ctx.guild.roles, name="Muted")
         if not muted_role:
-            await ctx.send("Le rôle 'Muted' n'existe pas.")
+            await ctx.send("The 'Muted' role does not exist.")
             return
         if muted_role not in member.roles:
-            await ctx.send("Ce membre n'est pas muet.")
+            await ctx.send("This member is not muted.")
             return
         try:
             await member.remove_roles(muted_role, reason=reason)
             embed = discord.Embed(
-                title="Membre non-muet",
-                description=f"{member.mention} n'est plus muet.",
+                title="Member Unmuted",
+                description=f"{member.mention} is no longer muted.",
                 color=discord.Color.green()
             )
             if reason:
-                embed.add_field(name="Raison", value=reason)
+                embed.add_field(name="Reason", value=reason)
             await ctx.send(embed=embed)
         except discord.Forbidden:
-            await ctx.send("Je n'ai pas la permission de gérer les rôles.")
+            await ctx.send("I don't have permission to manage roles.")
 
 async def setup(bot):
     await bot.add_cog(Moderation(bot))
